@@ -1,37 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather Dashboard</title>
     <!-- Bootstrap -->
-
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
     <!-- Additional CSS -->
-    <link rel="stylesheet" href="style.css" type="text/css">
-</head>
-<body>
-    
-    <h1>Hello World</h1>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark justify-content-center">
+      <a class="navbar-brand">Weather Dashboard</a>
+    </nav>
+    <div class="container flex display-flex">
+      <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <form class="form-inline">
+            <label class="sr-only" for="inlineFormInputName2">Name</label>
+            <input
+              type="text"
+              class="form-control mb-2 mr-sm-2"
+              id="inlineFormInputName2"
+              placeholder="Search a city.."
+            />
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+          </form>
+          <ul class="list-group row">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Cras justo odio
+              <span class="badge badge-primary badge-pill">14</span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Dapibus ac facilisis in
+              <span class="badge badge-primary badge-pill">2</span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Morbi leo risus
+              <span class="badge badge-primary badge-pill">1</span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Morbi leo risus
+              <span class="badge badge-primary badge-pill">1</span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Morbi leo risus
+              <span class="badge badge-primary badge-pill">1</span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Search bar goes here
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Cras justo odio
+              <span class="badge badge-primary badge-pill">14</span>
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-8 flex display-flex justify-content-center">
+          <div class="row-top">This is the top row</div>
+          <div class="row-bottom">
+            <div class="col-sm-2 col-md-2 col-lg-2 day-1-info day-info">Day 1 Info</div>
+            <div class="col-sm-2 col-md-2 col-lg-2 day-2-info day-info">Day 2 Info</div>
+            <div class="col-sm-2 col-md-2 col-lg-2 day-3-info day-info">Day 3 Info</div>
+            <div class="col-sm-2 col-md-2 col-lg-2 day-4-info day-info">Day 4 Info</div>
+            <div class="col-sm-2 col-md-2 col-lg-2 day-5-info day-info">Day 5 Info</div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Javascript -->
     <script src="script.js"></script>
     <!-- jQuery .ajax friendly -->
 
     <!-- Bootstrap Javascript -->
-</body>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
