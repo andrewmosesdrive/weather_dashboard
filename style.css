@@ -1,4 +1,7 @@
-/* .forecasts {
-    display: flex;
-    justify-content: space-between;
-} */
+.row-carousel {
+    
+}
+
+.slider {
+    height: 100px!important;
+}

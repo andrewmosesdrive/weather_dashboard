@@ -2,6 +2,11 @@
 $(document).ready(() => {
   console.log("document loaded");
 
+  $('.carousel.carousel-slider').carousel({
+    fullWidth: true,
+    indicators: true,
+  });
+
   // create an onclick function so button click populates the data corresponding to the city searched, then uses localstorage to store the search, then appends the searched city as a button below it
   $("#search").on("keypress", (event) => {
     // got autocomplete workaround idea from https://stackoverflow.com/questions/39883425/materialize-autocomplete-with-dynamic-data-in-jquery-ajax
@@ -15,7 +20,7 @@ $(document).ready(() => {
     //   });
 
     if (event.which == 13) {
-      console.log("pls work");
+    //   console.log("pls work");
 
       event.preventDefault();
       // set up ajax call
@@ -37,16 +42,28 @@ $(document).ready(() => {
         // console.log(queryURL);
         // console.log(response1.name);
 
-        // use jquery to grab the following data based on city: name, the date, icon for weather conditions, wind speed, humidity, UV index, and temp
+        // UV API for UV index
+        let uvIndexCall = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + response1.coord.lat + "&lon=" + response1.coord.lon;
+        console.log(uvIndexCall);
+
+        // ajax call for UV index
+        $.ajax({
+            url: uvIndexCall,
+            method: "GET",
+        }).then((responseUV) => {
+            // console.log(responseUV)
+            $("#uvIndex").text("UV Index: " + responseUV.value);
+        })
+       
+        // ajax outputs and update text 
         $("#cityName").text("City: " + response1.name);
         // $("#todaysDate").text("" + response1);
         // $("#condIcon").text(response1);
         $("#windSpeed").text("Wind Speed: " + response1.wind.speed + "mph");
         $("#humidity").text("Humidity: " + response1.main.humidity + "%");
-        // $("#uvIndex").text("UV Index: " + response1);
         $("#temp").text("Temp: " + response1.main.temp + "℉");
 
-        // need to append most recent search 
+        // Append most recent searches 
         let a = $("<li>");
 
         a.addClass("collection-item");
@@ -76,10 +93,22 @@ $(document).ready(() => {
         // console.log(queryURL);
         console.log(response2);
 
-        // $("#day1").text("" + response2);
-        // $("#day2").text("" + response2);
-        // $("#day3").text("" + response2);
-        // $("#day4").text("" + response2);
+
+        // create array of jquery day selectors
+        // let dayArray = [("#day1"), ("#day2"), ("#day3"), ("#day4"), ("#day5")];
+
+        // try each - UNSUCCESSFUL
+        // $.each(dayArray, () => {
+        //     $.text(response2.dt_txt);
+        //     $.text(response2);
+        //     $.text("Temp: " + response2.main.temp);
+        //     $.text("Humidity: " + response2.main.humidity)
+        // })
+        
+        // $("#day1").text(response2.dt_txt);
+        // $("#day2").text(response2);
+        // $("#day3").text("Temp: " + response2);
+        // $("#day4").text("Humidity" + response2);
         // $("#day5").text("" + response2);
       });
 
@@ -89,8 +118,6 @@ $(document).ready(() => {
 
   // use localStorage to save last search and append to html as clickable button to review it's respective data
 
-  // declare a variable for the UV index which will present a color indicating conditions (favorable, moderate, severe)
-  let UVindex = "";
 
   // declare a variable for the future weather conditions
   let futureConditions = "";
