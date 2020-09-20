@@ -14,6 +14,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css"
     />
+    <link rel="stylesheet" href="style.css" type="text/css" />
   </head>
   <body>
     <main class="container">
@@ -27,9 +28,15 @@
           <form>
             <div class="input-field">
               <input id="search" type="search" class="validate-blue" />
-              <label for="search">Search for a city here</label>
+              <label for="search">Search here</label>
             </div>
           </form>
+          <ul class="collection">
+            <!-- <li class="collection-item">Old searches go here</li> -->
+          </ul>
+          <a class="waves-effect waves-light btn-small" id="clearHistory"
+            >Clear history</a
+          >
         </div>
         <div class="col s8 m8 l8">
           <div class="row sm12 md12 l12">
@@ -45,7 +52,34 @@
               </span>
             </div>
           </div>
-          <div class="row"></div>
+          <h5>Five day forecast</h5>
+          <div class="row forecasts">
+            <div class="col s2 m2 l2" id="day1">
+              <div class="card-panel teal">
+                <span class="white-text">Stuff goes here </span>
+              </div>
+            </div>
+            <div class="col s2 m2 l2" id="day2">
+              <div class="card-panel teal">
+                <span class="white-text">Stuff goes here </span>
+              </div>
+            </div>
+            <div class="col s2 m2 l2" id="day3">
+              <div class="card-panel teal">
+                <span class="white-text">Stuff goes here </span>
+              </div>
+            </div>
+            <div class="col s2 m2 l2" id="day4">
+              <div class="card-panel teal">
+                <span class="white-text">Stuff goes here </span>
+              </div>
+            </div>
+            <div class="col s2 m2 l2" id="day5">
+              <div class="card-panel teal">
+                <span class="white-text">Stuff goes here </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>

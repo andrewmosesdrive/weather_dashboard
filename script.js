@@ -4,8 +4,8 @@ $(document).ready(() => {
 
   // create an onclick function so button click populates the data corresponding to the city searched, then uses localstorage to store the search, then appends the searched city as a button below it
   $("#search").on("keypress", (event) => {
-
-    // autocomplete 
+    // got autocomplete workaround idea from https://stackoverflow.com/questions/39883425/materialize-autocomplete-with-dynamic-data-in-jquery-ajax
+    // autocomplete
     // $("#search").autocomplete({
     //     data: {
     //       "Apple": null,
@@ -13,7 +13,6 @@ $(document).ready(() => {
     //       "Google": 'https://placehold.it/250x250'
     //     },
     //   });
-
 
     if (event.which == 13) {
       console.log("pls work");
@@ -36,10 +35,7 @@ $(document).ready(() => {
         method: "GET",
       }).then((response1) => {
         // console.log(queryURL);
-        console.log(response1.name);
-        console.log(response1.wind.speed);
-        console.log(response1.main.humidity);
-        console.log(response1.main.temp);
+        // console.log(response1.name);
 
         // use jquery to grab the following data based on city: name, the date, icon for weather conditions, wind speed, humidity, UV index, and temp
         $("#cityName").text("City: " + response1.name);
@@ -49,58 +45,65 @@ $(document).ready(() => {
         $("#humidity").text("Humidity: " + response1.main.humidity + "%");
         // $("#uvIndex").text("UV Index: " + response1);
         $("#temp").text("Temp: " + response1.main.temp + "℉");
+
+        // need to append most recent search 
+        let a = $("<li>");
+
+        a.addClass("collection-item");
+
+        a.text($("#search").val());
+
+        $(".collection").append(a);
+
+        $("#search").val("");
       });
 
-      $("#search").val("");
+      // create ajax call for 5 day forecast data based on location
+
+      let APIKey2 = "f2bff83dc128cd28c3b9e200e1c60bc9";
+
+      let queryURL2 =
+        "https://api.openweathermap.org/data/2.5/forecast?q=" +
+        location +
+        "&appid=" +
+        APIKey2 +
+        "&units=imperial";
+
+      $.ajax({
+        url: queryURL2,
+        method: "GET",
+      }).then((response2) => {
+        // console.log(queryURL);
+        console.log(response2);
+
+        // $("#day1").text("" + response2);
+        // $("#day2").text("" + response2);
+        // $("#day3").text("" + response2);
+        // $("#day4").text("" + response2);
+        // $("#day5").text("" + response2);
+      });
+
       // -----------------------------------------------------------
     }
-
-    
   });
 
-  // use localstorage to save last search and append to html as clickable button to review it's respective data
+  // use localStorage to save last search and append to html as clickable button to review it's respective data
 
   // declare a variable for the UV index which will present a color indicating conditions (favorable, moderate, severe)
   let UVindex = "";
 
   // declare a variable for the future weather conditions
-  let futureCondtions = "";
-
-  // --------------------------------------------------------------------
-  // create ajax call for 5 day forecast data based on location
-
-  let APIKey = "f2bff83dc128cd28c3b9e200e1c60bc9";
-
-  let location = "Chandler";
-
-  let queryURL =
-    "https://api.openweathermap.org/data/2.5/forecast?q=" +
-    location +
-    "&appid=" +
-    APIKey +
-    "&units=imperial";
-
-  $.ajax({
-    url: queryURL,
-    method: "GET",
-  }).then((response2) => {
-    console.log(queryURL);
-    console.log(response2);
-  });
-
-  //   $("#day1").text("" + response2);
-  //   $("#day2").text("" + response2);
-  //   $("#day3").text("" + response2);
-  //   $("#day4").text("" + response2);
-  //   $("#day5").text("" + response2);
+  let futureConditions = "";
 
   // --------------------------------------------------------------------
 
-  // set browser to open with last searched city's data using localstorage memory
+  // --------------------------------------------------------------------
 
-  // create an onclick function which clears localstorage (clear history)
+  // set browser to open with last searched city's data using localStorage memory
+
+  // create an onclick function which clears localStorage (clear history)
   $("#clearHistory").on("click", () => {
-    localStorage.clear();
+    $(".collection").empty();
   });
 
   // need to declare a variable for recent search
