@@ -3,32 +3,52 @@ $(document).ready(() => {
 
   // create an onclick function so button click populates the data corresponding to the city searched, then uses localstorage to store the search, then appends the searched city as a button below it
   $("#search").on("keypress", (event) => {
-    // got autocomplete workaround idea from https://stackoverflow.com/questions/39883425/materialize-autocomplete-with-dynamic-data-in-jquery-ajax
     // autocomplete
-    // $("#search").autocomplete({
-    //     data: {
-    //       "Apple": null,
-    //       "Microsoft": null,
-    //       "Google": 'https://placehold.it/250x250'
-    //     },
-    //   });
+    $(function () {
+      let APIKey = "f2bff83dc128cd28c3b9e200e1c60bc9";
+      let location = $("#search").val().trim();
+      let queryURL =
+        "https://api.openweathermap.org/data/2.5/weather?q=" +
+        location +
+        "&appid=" +
+        APIKey +
+        "&units=imperial";
+
+      // got autocomplete workaround idea from https://stackoverflow.com/questions/39883425/materialize-autocomplete-with-dynamic-data-in-jquery-ajax
+
+      $.ajax({
+        url: queryURL,
+        method: "GET",
+        success: function (res) {
+          let cityArray = res;
+          console.log(res);
+          let dataCity = {};
+          for (let i = 0; i < cityArray.length; i++) {
+            dataCity[cityArray[i].name] = cityArray[i];
+          }
+          $("input.autocomplete").autocomplete({
+            data: dataCity,
+            limit: 3,
+          });
+          console.log(dataCity);
+        },
+      });
+    });
 
     if (event.which == 13) {
-      //   console.log("pls work");
+      // console.log("pls work");
 
       event.preventDefault();
-
+      // clear old 5 day forecast
       $("#dynamic-5-day").empty();
 
-
+      // current date variable
       let dateVar = moment().format("dddd");
       // console.log(dateVar)
 
       // set up ajax call
       let APIKey = "f2bff83dc128cd28c3b9e200e1c60bc9";
-
       let location = $("#search").val().trim();
-
       let queryURL =
         "https://api.openweathermap.org/data/2.5/weather?q=" +
         location +
@@ -41,7 +61,7 @@ $(document).ready(() => {
         method: "GET",
       }).then((response1) => {
         // console.log(queryURL);
-        // console.log(response1.name);
+        console.log(response1.name);
 
         // UV API for UV index
         let uvIndexCall =
@@ -62,7 +82,7 @@ $(document).ready(() => {
           $("#uvIndex").text("UV Index: " + responseUV.value);
 
           if (responseUV.value < 3) {
-            $("#uvIndex").addClass("badge green darken-2");
+            $("#uvIndex").addClass("badge green");
           } else if (responseUV.value >= 3 && responseUV.value < 6) {
             $("#uvIndex").addClass("badge yellow darken-2");
           } else if (responseUV.value >= 6) {
@@ -79,20 +99,14 @@ $(document).ready(() => {
 
         // Append most recent searches
         let a = $("<li>");
-
         a.addClass("collection-item");
-
         a.text($("#search").val());
-
         $(".collection").prepend(a);
-
         $("#search").val("");
       });
 
       // create ajax call for 5 day forecast data based on location
-
       let APIKey2 = "f2bff83dc128cd28c3b9e200e1c60bc9";
-
       let queryURL2 =
         "https://api.openweathermap.org/data/2.5/forecast?q=" +
         location +
@@ -117,7 +131,7 @@ $(document).ready(() => {
           dateVar = moment(list[i].dt_txt.replace(" 00:00:00", "")).format(
             "dddd"
           );
-          //   console.log(dateVar)
+          // console.log(dateVar)
 
           // create variable for future conditions
           let futureConditions = `<div class="col card-panel hoverable teal" id"card-margin">
@@ -138,7 +152,7 @@ $(document).ready(() => {
     }
   });
 
-  // create an onclick function which clears localStorage (clear history)
+  // create an onclick function which clears visible search history
   $("#clearHistory").on("click", () => {
     $(".collection").empty();
   });
@@ -146,5 +160,6 @@ $(document).ready(() => {
   // need to declare a variable for recent search
   let recentSearchOption = "";
 
+  // function for recalling data from recent search
   function recallSearch() {}
 });
