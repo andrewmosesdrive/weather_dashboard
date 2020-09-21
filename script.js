@@ -1,11 +1,5 @@
-// always start with document ready
 $(document).ready(() => {
-  console.log("document loaded");
-
-  $('.carousel.carousel-slider').carousel({
-    fullWidth: true,
-    indicators: true,
-  });
+  // console.log("document loaded");
 
   // create an onclick function so button click populates the data corresponding to the city searched, then uses localstorage to store the search, then appends the searched city as a button below it
   $("#search").on("keypress", (event) => {
@@ -20,9 +14,16 @@ $(document).ready(() => {
     //   });
 
     if (event.which == 13) {
-    //   console.log("pls work");
+      //   console.log("pls work");
 
       event.preventDefault();
+
+      $("#dynamic-5-day").empty();
+
+
+      let dateVar = moment().format("dddd");
+      // console.log(dateVar)
+
       // set up ajax call
       let APIKey = "f2bff83dc128cd28c3b9e200e1c60bc9";
 
@@ -34,7 +35,7 @@ $(document).ready(() => {
         "&appid=" +
         APIKey +
         "&units=imperial";
-      //   api.openweathermap.org/data/2.5/weather?q=Tempe&appid=f2bff83dc128cd28c3b9e200e1c60bc9
+
       $.ajax({
         url: queryURL,
         method: "GET",
@@ -43,34 +44,47 @@ $(document).ready(() => {
         // console.log(response1.name);
 
         // UV API for UV index
-        let uvIndexCall = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + response1.coord.lat + "&lon=" + response1.coord.lon;
-        console.log(uvIndexCall);
+        let uvIndexCall =
+          "http://api.openweathermap.org/data/2.5/uvi?appid=" +
+          APIKey +
+          "&lat=" +
+          response1.coord.lat +
+          "&lon=" +
+          response1.coord.lon;
+        // console.log(uvIndexCall);
 
         // ajax call for UV index
         $.ajax({
-            url: uvIndexCall,
-            method: "GET",
+          url: uvIndexCall,
+          method: "GET",
         }).then((responseUV) => {
-            // console.log(responseUV)
-            $("#uvIndex").text("UV Index: " + responseUV.value);
-        })
-       
-        // ajax outputs and update text 
+          // console.log(responseUV)
+          $("#uvIndex").text("UV Index: " + responseUV.value);
+
+          if (responseUV.value < 3) {
+            $("#uvIndex").addClass("badge green darken-2");
+          } else if (responseUV.value >= 3 && responseUV.value < 6) {
+            $("#uvIndex").addClass("badge yellow darken-2");
+          } else if (responseUV.value >= 6) {
+            $("#uvIndex").addClass("badge red darken-2");
+          }
+        });
+
+        // ajax outputs and update text
         $("#cityName").text("City: " + response1.name);
-        // $("#todaysDate").text("" + response1);
-        // $("#condIcon").text(response1);
+        $("#todaysDate").text(dateVar);
         $("#windSpeed").text("Wind Speed: " + response1.wind.speed + "mph");
         $("#humidity").text("Humidity: " + response1.main.humidity + "%");
         $("#temp").text("Temp: " + response1.main.temp + "℉");
 
-        // Append most recent searches 
+        // Append most recent searches
         let a = $("<li>");
 
         a.addClass("collection-item");
 
         a.text($("#search").val());
 
-        $(".collection").append(a);
+        $(".collection").prepend(a);
 
         $("#search").val("");
       });
@@ -93,40 +107,36 @@ $(document).ready(() => {
         // console.log(queryURL);
         console.log(response2);
 
+        // create new var for list
+        let list = response2.list;
+        // for loop to go through dates
+        for (let i = 0; i < list.length; i += 8) {
+          event.preventDefault();
 
-        // create array of jquery day selectors
-        // let dayArray = [("#day1"), ("#day2"), ("#day3"), ("#day4"), ("#day5")];
+          // re-assign dateVar for the 5 day forecast and use moment to format the response
+          dateVar = moment(list[i].dt_txt.replace(" 00:00:00", "")).format(
+            "dddd"
+          );
+          //   console.log(dateVar)
 
-        // try each - UNSUCCESSFUL
-        // $.each(dayArray, () => {
-        //     $.text(response2.dt_txt);
-        //     $.text(response2);
-        //     $.text("Temp: " + response2.main.temp);
-        //     $.text("Humidity: " + response2.main.humidity)
-        // })
-        
-        // $("#day1").text(response2.dt_txt);
-        // $("#day2").text(response2);
-        // $("#day3").text("Temp: " + response2);
-        // $("#day4").text("Humidity" + response2);
-        // $("#day5").text("" + response2);
+          // create variable for future conditions
+          let futureConditions = `<div class="col card-panel hoverable teal" id"card-margin">
+            <span class="white-text"
+            <p id="current-day">${dateVar}</p>       
+            <img src="https://openweathermap.org/img/wn/${list[i].weather[0].icon}@2x.png"/>
+            <p>Temp: ${list[i].main.temp}℉</p>
+            <p>Humidity: ${list[i].main.humidity}%</p>
+            </span>
+            </div>`;
+          // console.log(futureConditions);
+
+          $("#dynamic-5-day").append(futureConditions);
+        }
       });
 
       // -----------------------------------------------------------
     }
   });
-
-  // use localStorage to save last search and append to html as clickable button to review it's respective data
-
-
-  // declare a variable for the future weather conditions
-  let futureConditions = "";
-
-  // --------------------------------------------------------------------
-
-  // --------------------------------------------------------------------
-
-  // set browser to open with last searched city's data using localStorage memory
 
   // create an onclick function which clears localStorage (clear history)
   $("#clearHistory").on("click", () => {
@@ -136,6 +146,5 @@ $(document).ready(() => {
   // need to declare a variable for recent search
   let recentSearchOption = "";
 
-  // need to give newly created recent searches onclick function
-  $("#recentSearchOption").on("click", () => {});
+  function recallSearch() {}
 });
