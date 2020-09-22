@@ -134,6 +134,7 @@ $(document).ready(() => {
           // console.log(dateVar)
 
           // create variable for future conditions
+          // template literal with string interpolation created with assistance from @alligatormonday
           let futureConditions = `<div class="col card-panel hoverable teal" id"card-margin">
             <span class="white-text"
             <p id="current-day">${dateVar}</p>       
@@ -157,9 +158,9 @@ $(document).ready(() => {
     $(".collection").empty();
   });
 
-  // need to declare a variable for recent search
-  let recentSearchOption = "";
+  // create a function to re-run recent search based on text content of collection-item clicked
+  // need to use event.target, and textContent or .text()
 
-  // function for recalling data from recent search
-  function recallSearch() {}
+
+//   localStorage for return to last search when you revisit page
 });
