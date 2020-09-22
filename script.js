@@ -16,24 +16,24 @@ $(document).ready(() => {
 
       // got autocomplete workaround idea from https://stackoverflow.com/questions/39883425/materialize-autocomplete-with-dynamic-data-in-jquery-ajax
 
-      $.ajax({
-        url: queryURL,
-        method: "GET",
-        success: function (res) {
-          let cityArray = res;
-          console.log(res);
-          let dataCity = {};
-          for (let i = 0; i < cityArray.length; i++) {
-            dataCity[cityArray[i].name] = cityArray[i];
-          }
-          $("input.autocomplete").autocomplete({
-            data: dataCity,
-            limit: 3,
-          });
-          console.log(dataCity);
-        },
-      });
-    });
+    //   $.ajax({
+    //     url: queryURL,
+    //     method: "GET",
+    //     success: function (res) {
+    //       let cityArray = res;
+    //       console.log(res);
+    //       let dataCity = {};
+    //       for (let i = 0; i < cityArray.length; i++) {
+    //         dataCity[cityArray[i].name] = cityArray[i];
+    //       }
+    //       $("input.autocomplete").autocomplete({
+    //         data: dataCity,
+    //         limit: 3,
+    //       });
+    //       console.log(dataCity);
+    //     },
+    //   });
+    // });
 
     if (event.which == 13) {
       // console.log("pls work");
