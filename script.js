@@ -4,15 +4,15 @@ $(document).ready(() => {
   // create an onclick function so button click populates the data corresponding to the city searched, then uses localstorage to store the search, then appends the searched city as a button below it
   $("#search").on("keypress", (event) => {
     // autocomplete
-    $(function () {
-      let APIKey = "f2bff83dc128cd28c3b9e200e1c60bc9";
-      let location = $("#search").val().trim();
-      let queryURL =
-        "https://api.openweathermap.org/data/2.5/weather?q=" +
-        location +
-        "&appid=" +
-        APIKey +
-        "&units=imperial";
+    // $(function () {
+    //   let APIKey = "f2bff83dc128cd28c3b9e200e1c60bc9";
+    //   let location = $("#search").val().trim();
+    //   let queryURL =
+    //     "https://api.openweathermap.org/data/2.5/weather?q=" +
+    //     location +
+    //     "&appid=" +
+    //     APIKey +
+    //     "&units=imperial";
 
       // got autocomplete workaround idea from https://stackoverflow.com/questions/39883425/materialize-autocomplete-with-dynamic-data-in-jquery-ajax
 
