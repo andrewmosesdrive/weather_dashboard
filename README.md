@@ -32,4 +32,4 @@ This assignment was particularly difficult, but through collaboration with Josep
 
 ### Deployment Link: andrewmosesdrive.github.io/weather_dashboard
 
-### Screenshot:
+### Screenshot: ![Screenshot](/images/screenshot.jpg)
