@@ -33,3 +33,6 @@ This assignment was particularly difficult, but through collaboration with Josep
 ### Deployment Link: andrewmosesdrive.github.io/weather_dashboard
 
 ### Screenshot: ![Screenshot](images/screenshot.jpg)
+
+### Incomplete features:
+- Currently exploring options to utilize the Materialize autocomplete function, referencing an API for city names. It is not part of the acceptance criteria, but I thought it was interesting so I wanted to take on the challenge. It is commented out completely due to currently being non-functioning. Please disregard!
